@@ -18,6 +18,7 @@ export function DigestPage({ digest }: { digest: NightDigest }) {
       {digest.rows.length === 0 ? (
         <p class="mute">nothing ran</p>
       ) : (
+        <div class="table-scroll">
         <table>
           <thead>
             <tr>
@@ -49,6 +50,7 @@ export function DigestPage({ digest }: { digest: NightDigest }) {
             })}
           </tbody>
         </table>
+        </div>
       )}
     </>
   );
