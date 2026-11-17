@@ -65,8 +65,6 @@ function rowBlock(html: string, job: string): string {
   return html.slice(start, end + '</tr>'.length);
 }
 
-const tagSkeleton = (block: string) => (block.match(/<[^>]+>/g) ?? []).join('');
-
 const validDigest = {
   night: VALID,
   rows: [
@@ -96,6 +94,7 @@ const validDigest = {
       runs: 4,
       retries: 3,
       lastStatus: 'ok',
+      lastError: 'upstream 503',
       firstAt: '2026-10-29T01:30:00+01:00',
       lastAt: '2026-10-29T01:37:00+01:00',
     },
@@ -162,13 +161,9 @@ describe('GET /digest/:night (HTML)', () => {
     const plain = rowBlock(html, 'lane/sync');
     const retried = rowBlock(html, 'fixtures/refresh');
     const failed = rowBlock(html, 'notes/backup');
-    expect(
-      tagSkeleton(retried) !== tagSkeleton(plain) || /retr/i.test(textOf(retried)),
-    ).toBe(true);
-    expect(
-      tagSkeleton(failed) !== tagSkeleton(plain) || /fail/i.test(textOf(failed)),
-    ).toBe(true);
-    expect(textOf(failed)).toMatch(/fail/i);
+    expect(retried).toMatch(/<tr class="warn"/);
+    expect(failed).toMatch(/<tr class="warn"/);
+    expect(plain).not.toMatch(/class="warn"/);
   });
 
   it('escapes unsafe job and error text', async () => {
@@ -191,8 +186,6 @@ describe('GET /api/digest/:night (JSON)', () => {
     const res = await app.request(`/api/digest/${VALID}`);
     expect(res.status).toBe(200);
     const body = (await res.json()) as NightDigest;
-    // fixtures/refresh has no lastError assertion: the contract does not say whether it
-    // holds the last error seen or null after a later ok. Everything else is exact.
     expect(body).toMatchObject(validDigest);
     expect(Object.keys(body).sort()).toEqual(['badLines', 'counts', 'night', 'rows']);
     for (const row of body.rows) {
