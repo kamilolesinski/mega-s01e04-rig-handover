@@ -1,8 +1,9 @@
 ---
 plan: morning-digest
-status: ready
+status: done
 owner: rook
 opened: 2026-10-29
+closed: 2026-11-18
 ---
 
 # Morning digest
@@ -77,3 +78,15 @@ page again with `LANE_MARKER` unset (the banner reads "no marker set") and uploa
 link. Move this plan to `docs/plans/done/` with its issue list.
 
 Done when: the preview link no longer shows the lane marker.
+
+## Issues
+
+| # | Issue | State at archive |
+|---|-------|------------------|
+| 1 | [Run log reader and shared contract](https://github.com/kamilolesinski/mega-s01e04-rig-handover/issues/1) | closed |
+| 2 | [Digest page: GET /digest/:night](https://github.com/kamilolesinski/mega-s01e04-rig-handover/issues/2) | closed |
+| 3 | [Digest JSON: GET /api/digest/:night](https://github.com/kamilolesinski/mega-s01e04-rig-handover/issues/3) | closed |
+| 4 | [Status board: digest links and counts](https://github.com/kamilolesinski/mega-s01e04-rig-handover/issues/4) | closed |
+| 5 | [Digest route tests](https://github.com/kamilolesinski/mega-s01e04-rig-handover/issues/5) | closed |
+| 6 | [Publish HTML preview for review](https://github.com/kamilolesinski/mega-s01e04-rig-handover/issues/6) | open |
+| 7 | [Remove preview marker and archive plan](https://github.com/kamilolesinski/mega-s01e04-rig-handover/issues/7) | open, closed after this commit |
